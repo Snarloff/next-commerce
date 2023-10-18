@@ -1,11 +1,26 @@
-export default function Home() {
+import { ProductType } from '@/types/product.type'
+
+async function getData() {
+  const res = await fetch('https://fakestoreapi.com/products')
+
+  if (!res.ok) {
+    throw new Error('Something went wrong')
+  }
+
+  return await res.json()
+}
+
+export default async function Home() {
+  const products: ProductType[] = await getData()
+
   return (
     <div className="mx-auto max-w-7xl px-8 pt-8 xl:px-0">
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
-        <div className="overflow-hidden rounded-lg bg-white shadow-lg">produto 1</div>
-        <div className="overflow-hidden rounded-lg bg-white shadow-lg">produto 2</div>
-        <div className="overflow-hidden rounded-lg bg-white shadow-lg">produto 3</div>
-        <div className="overflow-hidden rounded-lg bg-white shadow-lg">produto 4</div>
+        {products.map((product) => (
+          <div className="overflow-hidden rounded-lg bg-white shadow-lg" key={product.id}>
+            {product.title}
+          </div>
+        ))}
       </div>
     </div>
   )
