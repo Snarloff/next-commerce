@@ -1,3 +1,4 @@
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 
 export function Navbar() {
@@ -6,6 +7,16 @@ export function Navbar() {
       <Link href="/" className="text-md flex h-12 items-center font-bold uppercase">
         Next Store
       </Link>
+      <div className="flex items-center gap-8">
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="rounded-md border border-gray-400 px-3 py-2">Fazer Login</button>
+          </SignInButton>
+        </SignedOut>
+      </div>
     </nav>
   )
 }
