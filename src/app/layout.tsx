@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 import { Navbar } from '@/app/components/Navbar'
+import { ptBR } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Inter } from 'next/font/google'
 import { clsx } from 'clsx'
-import { ptBR } from '@clerk/localizations'
 
 import './globals.css'
 
