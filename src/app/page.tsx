@@ -1,13 +1,8 @@
 import { ProductCard } from '@/app/components/Product'
+import { stripe } from '@/lib/stripe'
 import { ProductType } from '@/types/product.type'
 
-import Stripe from 'stripe'
-
 async function getData(): Promise<ProductType[]> {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2023-10-16',
-  })
-
   const products = await stripe.products.list()
   const formatedProducts = await Promise.all(
     products.data.map(async (product) => {

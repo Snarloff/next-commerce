@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 
+import { Hydrate } from '@/app/components/Hydrate'
 import { Navbar } from '@/app/components/Navbar'
 import { ptBR } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
-import { Inter } from 'next/font/google'
 import { clsx } from 'clsx'
+import { Inter } from 'next/font/google'
 
 import './globals.css'
 
@@ -20,8 +21,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ClerkProvider localization={ptBR}>
       <html lang="pt-BR">
         <body className={clsx(inter.className, 'bg-slate-700')}>
-          <Navbar />
-          <main className="h-screen p-16">{children}</main>
+          <Hydrate>
+            <Navbar />
+            <main className="h-screen p-16">{children}</main>
+          </Hydrate>
         </body>
       </html>
     </ClerkProvider>
