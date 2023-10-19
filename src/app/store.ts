@@ -2,11 +2,15 @@ import { ProductType } from '@/types/product.type'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+type CheckoutStates = 'cart' | 'checkout'
+
 type CartState = {
   cart: ProductType[]
   isOpen: boolean
+  onCheckout: CheckoutStates
   addToCart: (product: ProductType) => void
   removeFromCart: (product: ProductType) => void
+  setCheckout: (checkout: CheckoutStates) => void
   clearCart: () => void
   toggleCart: () => void
 }
@@ -16,6 +20,10 @@ export const useCartStore = create<CartState>()(
     (set) => ({
       cart: [],
       isOpen: false,
+      onCheckout: 'cart',
+      clearCart: () => set({ cart: [] }),
+      toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+      setCheckout: (checkout) => set({ onCheckout: checkout }),
       addToCart: (product) =>
         set((state) => {
           const productInCart = state.cart.find((item) => item.id === product.id)
@@ -57,8 +65,6 @@ export const useCartStore = create<CartState>()(
           const filteredCart = state.cart.filter((item) => item.id !== product.id)
           return { cart: filteredCart }
         }),
-      clearCart: () => set({ cart: [] }),
-      toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
     }),
     { name: 'cart-storage' }
   )
