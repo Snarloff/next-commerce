@@ -1,7 +1,13 @@
+'use client'
+
+import { useCartStore } from '@/app/store'
+
 export function Cart() {
+  const useStore = useCartStore()
+
   return (
     <>
-      <div className="relative flex cursor-pointer items-center">
+      <div className="relative flex cursor-pointer items-center" onClick={() => useStore.toggleCart()}>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             strokeLinecap="round"
@@ -14,6 +20,20 @@ export function Cart() {
           2
         </span>
       </div>
+
+      {useStore.isOpen && (
+        <div className="fixed left-0 top-0 z-50 h-screen w-full bg-black/25" onClick={() => useStore.toggleCart()}>
+          <div
+            className="absolute right-0 top-0 h-screen w-1/3 overflow-y-scroll bg-slate-600 p-12"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h1>Meu Carrinho</h1>
+            {useStore.cart.map((item) => (
+              <div key={item.id}>{item.name}</div>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   )
 }
