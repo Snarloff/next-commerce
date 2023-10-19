@@ -1,9 +1,10 @@
 'use client'
 
+import { Checkout } from '@/app/components/Checkout'
+import { CheckoutButton } from '@/app/components/CheckoutButton'
 import { useCartStore } from '@/app/store'
 import { formatPrice } from '@/lib/utils'
 import Image from 'next/image'
-import { CheckoutButton } from './CheckoutButton'
 
 export function CartDrawer() {
   const useStore = useCartStore()
@@ -24,24 +25,29 @@ export function CartDrawer() {
 
         <div className="my-4 border-t border-gray-400" />
 
-        {useStore.cart.map((item) => (
-          <div key={item.id} className="flex gap-4 py-4">
-            <Image src={item.image ?? ''} alt={item.name} width={120} height={120} className="w-24 object-cover" />
-            <div>
-              <h2 className="w-42 truncate">{item.name}</h2>
-              <h2>Quantidade: {item.quantity}</h2>
-              <p className="text-sm font-bold text-teal-600">{formatPrice(item.price)}</p>
-              <button className="mr-1 mt-2 rounded-md border px-2 py-1 text-sm" onClick={() => useStore.addToCart(item)}>
-                Adicionar
-              </button>
-              <button className="mr-1 mt-2 rounded-md border px-2 py-1 text-sm" onClick={() => useStore.removeFromCart(item)}>
-                Remover
-              </button>
-            </div>
-          </div>
-        ))}
+        {useStore.onCheckout === 'cart' && (
+          <>
+            {useStore.cart.map((item) => (
+              <div key={item.id} className="flex gap-4 py-4">
+                <Image src={item.image ?? ''} alt={item.name} width={120} height={120} className="w-24 object-cover" />
+                <div>
+                  <h2 className="w-42 truncate">{item.name}</h2>
+                  <h2>Quantidade: {item.quantity}</h2>
+                  <p className="text-sm font-bold text-teal-600">{formatPrice(item.price)}</p>
+                  <button className="mr-1 mt-2 rounded-md border px-2 py-1 text-sm" onClick={() => useStore.addToCart(item)}>
+                    Adicionar
+                  </button>
+                  <button className="mr-1 mt-2 rounded-md border px-2 py-1 text-sm" onClick={() => useStore.removeFromCart(item)}>
+                    Remover
+                  </button>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
 
         {useStore.cart.length > 0 && useStore.onCheckout === 'cart' && <CheckoutButton totalPrice={totalPrice} />}
+        {useStore.onCheckout === 'checkout' && <Checkout />}
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 {
   "conventionalCommits.scopes": [
     "components",
-    "types"
+    "types",
+    "routes"
   ]
 }
