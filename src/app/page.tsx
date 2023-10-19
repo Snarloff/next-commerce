@@ -1,18 +1,36 @@
+import { ProductCard } from '@/app/components/Product'
 import { ProductType } from '@/types/product.type'
-import { ProductCard } from './components/Product'
 
-async function getData() {
-  const res = await fetch('https://fakestoreapi.com/products')
+import Stripe from 'stripe'
 
-  if (!res.ok) {
-    throw new Error('Something went wrong')
-  }
+async function getData(): Promise<ProductType[]> {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2023-10-16',
+  })
 
-  return await res.json()
+  const products = await stripe.products.list()
+  const formatedProducts = await Promise.all(
+    products.data.map(async (product) => {
+      const price = await stripe.prices.list({
+        product: product.id,
+      })
+
+      return {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: price.data[0].unit_amount,
+        currency: price.data[0].currency,
+        image: product.images[0],
+      }
+    })
+  )
+
+  return formatedProducts
 }
 
 export default async function Home() {
-  const products: ProductType[] = await getData()
+  const products = await getData()
 
   return (
     <div className="mx-auto max-w-7xl px-8 pt-8 xl:px-0">
