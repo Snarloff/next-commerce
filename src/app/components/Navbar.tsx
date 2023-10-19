@@ -1,3 +1,4 @@
+import { Cart } from '@/app/components/Cart'
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 
@@ -8,14 +9,17 @@ export function Navbar() {
         Next Store
       </Link>
       <div className="flex items-center gap-8">
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <SignInButton mode="modal">
-            <button className="rounded-md border border-gray-400 px-3 py-2">Fazer Login</button>
-          </SignInButton>
-        </SignedOut>
+        <Cart />
+        <div>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="rounded-md border border-gray-400 px-3 py-2">Fazer Login</button>
+            </SignInButton>
+          </SignedOut>
+        </div>
       </div>
     </nav>
   )
