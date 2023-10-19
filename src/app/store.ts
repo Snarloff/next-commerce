@@ -16,7 +16,26 @@ export const useCartStore = create<CartState>()(
     (set) => ({
       cart: [],
       isOpen: false,
-      addToCart: (product) => set((state) => ({ cart: [...state.cart, product] })),
+      addToCart: (product) =>
+        set((state) => {
+          const productInCart = state.cart.find((item) => item.id === product.id)
+
+          if (productInCart) {
+            const updatedCart = state.cart.map((item) => {
+              if (item.id === product.id) {
+                return {
+                  ...item,
+                  quantity: item.quantity ? item.quantity + 1 : 1,
+                }
+              }
+              return item
+            })
+
+            return { cart: updatedCart }
+          }
+
+          return { cart: [...state.cart, { ...product, quantity: 1 }] }
+        }),
       removeFromCart: (product) => set((state) => ({ cart: state.cart.filter((item) => item.id !== product.id) })),
       clearCart: () => set({ cart: [] }),
       toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),

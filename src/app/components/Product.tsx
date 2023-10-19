@@ -1,3 +1,4 @@
+import { AddCart } from '@/app/components/AddCart'
 import { ProductImage } from '@/app/components/ProductImage'
 import { formatPrice } from '@/lib/utils'
 import { ProductType } from '@/types/product.type'
@@ -12,7 +13,7 @@ export function ProductCard({ product }: { product: ProductType }) {
         <p className="w-40 truncate">{product.name}</p>
         <p className="text-md text-teal-300">{formatPrice(product.price)}</p>
       </div>
-      <button className="rounded-md bg-teal-600 px-3.5 py-2.5 text-center text-sm text-white">Adicionar ao Carrinho</button>
+      <AddCart product={product} />
     </div>
   )
 }
