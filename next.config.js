@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['fakestoreapi.com', 'files.stripe.com'],
+    domains: ['fakestoreapi.com', 'files.stripe.com', 'pentagram-production.imgix.net'],
   },
 }
 
