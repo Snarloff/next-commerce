@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { ProductType } from '@/types/product.type'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type CheckoutStates = 'cart' | 'checkout'
+type CheckoutStates = 'cart' | 'checkout' | 'success'
 
 type CartState = {
   cart: ProductType[]
@@ -18,6 +20,7 @@ type CartState = {
 }
 
 export const useCartStore = create<CartState>()(
+  // @ts-ignore
   persist(
     (set) => ({
       cart: [],

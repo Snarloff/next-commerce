@@ -6,8 +6,8 @@ import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { Webhook, WebhookRequiredHeaders } from 'svix'
 
-const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || ''
 process.env.TZ = 'America/Sao_Paulo'
+const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || ''
 
 async function handler(request: Request) {
   const payload = await request.json()

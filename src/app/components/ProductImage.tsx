@@ -15,8 +15,8 @@ export function ProductImage({ product, fill }: ProductImageProps) {
   return fill ? (
     <Image
       fill
-      src={product.image}
-      alt={product.title}
+      src={product.image || ''}
+      alt={product.name}
       onLoadingComplete={() => setLoading(false)}
       className={`object-cover ${loading ? 'scale-110 blur-xl grayscale' : 'scale-100 blur-0 grayscale-0'}`}
     />
@@ -24,8 +24,8 @@ export function ProductImage({ product, fill }: ProductImageProps) {
     <Image
       width={400}
       height={700}
-      src={product.image}
-      alt={product.title}
+      src={product.image || ''}
+      alt={product.name}
       onLoadingComplete={() => setLoading(false)}
       className={`object-cover ${loading ? 'scale-110 blur-xl grayscale' : 'scale-100 blur-0 grayscale-0'}`}
     />
